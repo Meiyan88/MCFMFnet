@@ -246,9 +246,9 @@ class RAG_attention(nn.Module):
 
         return W_y
 
-class MSC(nn.Module):
+class TEM(nn.Module):
     def __init__(self, inchannel, outchannel=32):
-        super(MSC, self).__init__()
+        super(TEM, self).__init__()
         conv_op = nn.Conv3d
         norm_op = nn.InstanceNorm3d
         dropout_op = nn.Dropout3d
@@ -452,7 +452,7 @@ class Generic_UNet(SegmentationNetwork):
         # self.raa_tu = []
 
         self.RAG = []
-        self.MSC_list = []
+        self.TEM_list = []
         self.seg_outputs = []
 
         output_features = base_num_features
@@ -473,7 +473,7 @@ class Generic_UNet(SegmentationNetwork):
                                                               self.norm_op_kwargs, self.dropout_op,
                                                               self.dropout_op_kwargs, self.nonlin, self.nonlin_kwargs,
                                                               first_stride, basic_block=basic_block))
-            self.MSC_list.append(MSC(output_features))
+            self.TEM_list.append(TEM(output_features))
 
             if not self.convolutional_pooling:
                 self.td.append(pool_op(pool_op_kernel_sizes[d]))
